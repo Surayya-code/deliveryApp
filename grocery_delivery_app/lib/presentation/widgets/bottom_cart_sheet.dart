@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../provider/product_cart_sheet.dart';
 
 class BottomCartSheet extends StatelessWidget {
   const BottomCartSheet({super.key});
@@ -17,7 +20,7 @@ class BottomCartSheet extends StatelessWidget {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    for (int i = 1; i < 8; i++)
+                    for (int i = 1; i < 3; i++)
                       Container(
                         margin: const EdgeInsets.symmetric(
                             vertical: 10, horizontal: 15),
@@ -104,19 +107,28 @@ class BottomCartSheet extends StatelessWidget {
                                               ),
                                             ],
                                           ),
-                                          child: const Icon(
-                                            Icons.remove,
-                                            size: 20,
+                                          child: InkWell(
+                                            onTap: (){
+                                              context.read<ProductCartSheet>().decrProductCount();
+                                            },
+                                            child: const Icon(
+                                              Icons.remove,
+                                              size: 20,
+                                            ),
                                           ),
                                         ),
                                         Container(
                                           margin: const EdgeInsets.symmetric(
                                               horizontal: 5),
-                                          child: const Text(
-                                            "01",
-                                            style: TextStyle(
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.bold),
+                                          child: Consumer<ProductCartSheet>(
+                                            builder: (context,prCount,child) {
+                                              return  Text(
+                                                "${prCount.productCount}",//0
+                                                style:const TextStyle(
+                                                    fontSize: 15,
+                                                    fontWeight: FontWeight.bold),
+                                              );
+                                            }
                                           ),
                                         ),
                                         Container(
@@ -134,9 +146,15 @@ class BottomCartSheet extends StatelessWidget {
                                               ),
                                             ],
                                           ),
-                                          child: const Icon(
-                                            Icons.add,
-                                            size: 20,
+                                          child: GestureDetector(
+                                            onTap: (){
+                                              Provider.of<ProductCartSheet>(context, listen: false).incrProductCount();
+                                              //context.read<ProductCartSheet>().incrProductCount();
+                                            },
+                                            child: const Icon(
+                                              Icons.add,
+                                              size: 20,
+                                            ),
                                           ),
                                         ),
                                       ],
@@ -172,12 +190,16 @@ class BottomCartSheet extends StatelessWidget {
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold),
                               ),
-                              Text(
-                                "\$10 ",
-                                style: TextStyle(
-                                    color: Colors.yellow.shade800,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold),
+                              Consumer<ProductCartSheet>(
+                                builder: (context,product,child) {
+                                  return Text(
+                                    " \$ ${product.productCount}",
+                                    style: TextStyle(
+                                        color: Colors.yellow.shade800,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  );
+                                }
                               )
                             ],
                           ),
@@ -188,18 +210,22 @@ class BottomCartSheet extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "Cəmi məbləğ: ",
+                                "Cəmi məbləğ:   ",
                                 style: TextStyle(
                                     color: Colors.yellow.shade800,
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold),
                               ),
-                              Text(
-                                "\$18 ",
-                                style: TextStyle(
-                                    color: Colors.yellow.shade800,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold),
+                              Consumer<ProductCartSheet>(
+                                builder: (context,product,child) {
+                                  return Text(
+                                    "\$ ${product.productCount*product.productCount}  ",
+                                    style: TextStyle(
+                                        color: Colors.yellow.shade800,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  );
+                                }
                               )
                             ],
                           ),
