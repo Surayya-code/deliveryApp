@@ -108,8 +108,10 @@ class BottomCartSheet extends StatelessWidget {
                                             ],
                                           ),
                                           child: InkWell(
-                                            onTap: (){
-                                              context.read<ProductCartSheet>().decrProductCount();
+                                            onTap: () {
+                                              if (context.read<ProductCartSheet>().productCount > 0) {
+                                                context.read<ProductCartSheet>().decrProductCount();
+                                              }
                                             },
                                             child: const Icon(
                                               Icons.remove,
@@ -121,15 +123,15 @@ class BottomCartSheet extends StatelessWidget {
                                           margin: const EdgeInsets.symmetric(
                                               horizontal: 5),
                                           child: Consumer<ProductCartSheet>(
-                                            builder: (context,prCount,child) {
-                                              return  Text(
-                                                "${prCount.productCount}",//0
-                                                style:const TextStyle(
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.bold),
-                                              );
-                                            }
-                                          ),
+                                              builder:
+                                                  (context, prCount, child) {
+                                            return Text(
+                                              "${prCount.productCount}", //0
+                                              style: const TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold),
+                                            );
+                                          }),
                                         ),
                                         Container(
                                           padding: const EdgeInsets.all(2),
@@ -147,8 +149,11 @@ class BottomCartSheet extends StatelessWidget {
                                             ],
                                           ),
                                           child: GestureDetector(
-                                            onTap: (){
-                                              Provider.of<ProductCartSheet>(context, listen: false).incrProductCount();
+                                            onTap: () {
+                                              Provider.of<ProductCartSheet>(
+                                                      context,
+                                                      listen: false)
+                                                  .incrProductCount();
                                               //context.read<ProductCartSheet>().incrProductCount();
                                             },
                                             child: const Icon(
@@ -191,16 +196,15 @@ class BottomCartSheet extends StatelessWidget {
                                     fontWeight: FontWeight.bold),
                               ),
                               Consumer<ProductCartSheet>(
-                                builder: (context,product,child) {
-                                  return Text(
-                                    " \$ ${product.productCount}",
-                                    style: TextStyle(
-                                        color: Colors.yellow.shade800,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
-                                  );
-                                }
-                              )
+                                  builder: (context, product, child) {
+                                return Text(
+                                  " \$ ${product.productCount}",
+                                  style: TextStyle(
+                                      color: Colors.yellow.shade800,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
+                                );
+                              })
                             ],
                           ),
                           const SizedBox(
@@ -217,16 +221,15 @@ class BottomCartSheet extends StatelessWidget {
                                     fontWeight: FontWeight.bold),
                               ),
                               Consumer<ProductCartSheet>(
-                                builder: (context,product,child) {
-                                  return Text(
-                                    "\$ ${product.productCount*product.productCount}  ",
-                                    style: TextStyle(
-                                        color: Colors.yellow.shade800,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
-                                  );
-                                }
-                              )
+                                  builder: (context, product, child) {
+                                return Text(
+                                  "\$ ${product.productCount * product.productCount}  ",
+                                  style: TextStyle(
+                                      color: Colors.yellow.shade800,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
+                                );
+                              })
                             ],
                           ),
                         ],

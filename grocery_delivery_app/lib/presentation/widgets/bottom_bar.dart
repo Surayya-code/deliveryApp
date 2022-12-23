@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:grocery_delivery_app/provider/product_cart_sheet.dart';
+import 'package:provider/provider.dart';
 
 class BottomBar extends StatelessWidget {
   const BottomBar({super.key});
@@ -15,13 +17,17 @@ class BottomBar extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-             Text(
-              "₼12",
-              style: TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.yellow.shade800),
-            ),
+             Consumer<ProductCartSheet>(
+               builder: (context,product,child) {
+                 return Text(
+                  "₼ ${product.productCount}",
+                  style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.yellow.shade800),
+            );
+               }
+             ),
             InkWell(
               onTap: () {},
               child: Container(
@@ -32,20 +38,23 @@ class BottomBar extends StatelessWidget {
                   borderRadius: BorderRadius.circular(30),
                 ),
                 child: Row(
-                  children: const [
-                    Icon(
+                  children:  [
+                    const Icon(
                       Icons.shopping_cart,
                       color: Colors.white,
                       size: 23,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 5,
                     ),
-                    Text("Səbətə əlavə et",
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),),
+                    InkWell(
+                      onTap:(){},
+                      child: const Text("Səbətə əlavə et",
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),),
+                    ),
                   ],
                 ),
               ),

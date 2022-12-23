@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:grocery_delivery_app/provider/product_cart_sheet.dart';
+import 'package:provider/provider.dart';
 import '../../widgets/bottom_bar.dart';
 
 class ItemScreen extends StatelessWidget {
@@ -67,17 +69,27 @@ class ItemScreen extends StatelessWidget {
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(20),
                                 ),
-                                child: const Icon(Icons.remove),
+                                child: InkWell(
+                                  onTap: (){
+                                    if(context.read<ProductCartSheet>().productCount>0){
+                                     context.read<ProductCartSheet>().decrProductCount();
+                                    }
+                                  },
+                                  child: const Icon(Icons.remove)),
                               ),
                               Container(
                                 margin:
                                     const EdgeInsets.symmetric(horizontal: 10),
-                                child: const Text(
-                                  "01",
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white),
+                                child: Consumer<ProductCartSheet>(
+                                  builder: (context,product,child) {
+                                    return  Text(
+                                      "${product.productCount}",
+                                      style:const TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                    );
+                                  }
                                 ),
                               ),
                               Container(
@@ -86,7 +98,10 @@ class ItemScreen extends StatelessWidget {
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(20),
                                 ),
-                                child: const Icon(Icons.add),
+                                child: InkWell(
+                                  onTap:(){
+                                    context.read<ProductCartSheet>().incrProductCount();
+                                 },child: const Icon(Icons.add)),
                               ),
                             ],
                           ),
